@@ -1,3 +1,4 @@
+import 'package:clima/services/location.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -7,12 +8,6 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  Future<void> getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    print(position);
-  }
-
   /// Determine the current position of the device.
   ///
   /// When the location services are not enabled or permissions
@@ -55,17 +50,23 @@ class _LoadingScreenState extends State<LoadingScreen> {
         desiredAccuracy: LocationAccuracy.high);
   }
 
+  Location _location = Location();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: RaisedButton(
+          child: Text('Get Location'),
           onPressed: () {
             //Get the current location
-            _determinePosition().then((value) =>
-                print('lat: ${value.latitude} long: ${value.longitude}'));
+            /*_determinePosition().then(
+              (value) =>
+                  print('lat: ${value.latitude} long: ${value.longitude}'),
+            );*/
+
+            _location.getUserLocation();
           },
-          child: Text('Get Location'),
         ),
       ),
     );
